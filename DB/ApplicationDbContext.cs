@@ -110,7 +110,7 @@ namespace NetCrud2.DB
             using (var connection = new OracleConnection(connectString))
             {
                 connection.Open(); // Mở kết nối
-                using (var command = new OracleCommand("GetOrderSummary", connection))
+                using (var command = new OracleCommand("TESTPROCEDURE", connection))
                 {
                     // Tham số IN
                     command.CommandType = CommandType.StoredProcedure;

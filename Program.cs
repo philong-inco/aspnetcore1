@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NetCrud2.DB;
 using NetCrud2.Exceptions;
@@ -15,12 +15,17 @@ using NetCrud2.Service.Impl;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Connect trực tiếp
+var configruation = builder.Configuration;
+builder.Services.AddSingleton<DbContext2>();
+
 builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(o => {
 //o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
     o.UseOracle(builder.Configuration.GetConnectionString("OracleDbContext"));
 });
+
 
 
 // Repository // Interface => class abstract => class implement
