@@ -3,22 +3,26 @@ using NetCrud2.Mapper.Impl;
 using NetCrud2.Models;
 using NetCrud2.Models.DTO.Request;
 using NetCrud2.Models.DTO.Response;
+using NetCrud2.Respository;
 using NetCrud2.Respository.Impl;
 using System.Linq.Expressions;
 
 namespace NetCrud2.Service.Impl
 {
-    public class OrderService : IServiceGenerics<Order, OrderCreate, OrderUpdate, OrderResponse>
+    public class OrderService : IServiceGenerics<Order, OrderCreate, OrderUpdate, OrderResponse>, OrderServiceChild
     {
 
         private readonly IRepositoryGenerics<Order, string> _orderRepository;
         private readonly IMapperGenerics<Order, OrderCreate, OrderUpdate, OrderResponse> _mapper;
+        private readonly OrderRepositoryChild _orderRepositoryChild;
 
         public OrderService(IRepositoryGenerics<Order, string> orderRepository, 
-            IMapperGenerics<Order, OrderCreate, OrderUpdate, OrderResponse> mapper)
+            IMapperGenerics<Order, OrderCreate, OrderUpdate, OrderResponse> mapper, 
+            OrderRepositoryChild orderRepositoryChild)
         {
             _orderRepository = orderRepository;
             _mapper = mapper;
+            _orderRepositoryChild = orderRepositoryChild;
         }
 
         public async Task<OrderResponse> Add(OrderCreate create)
@@ -48,6 +52,11 @@ namespace NetCrud2.Service.Impl
             Order entity = await _orderRepository.GetAsync(o => o.Id == id);
             if (entity != null) 
                 await _orderRepository.Delete(entity);
+        }
+
+        public FindOrderResponse findOrderByPaymentMethodAndDate(string paymentMethod, DateTime start, DateTime end)
+        {
+            return _orderRepositoryChild.findOrderByPaymentMethodAndDate(paymentMethod, start, end);
         }
 
         public async Task<OrderResponse> Get(Expression<Func<Order, bool>> filter)

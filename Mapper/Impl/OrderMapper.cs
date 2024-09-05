@@ -4,6 +4,8 @@ using NetCrud2.Models;
 using Microsoft.EntityFrameworkCore;
 using NetCrud2.DB;
 using NetCrud2.Generics;
+using NetCrud2.Common;
+using System;
 
 namespace NetCrud2.Mapper.Impl
 {
@@ -49,7 +51,17 @@ namespace NetCrud2.Mapper.Impl
             order.Address = create.Address;
             order.BuyerId = buyer.Id;
             order.CreateDate = dateTime;
-            
+
+            string paymentIntArr = Utils.ConvertPaymentMethod.StringArrToIntArr(create.PaymentMethod);
+            if (paymentIntArr.Split(",").Select(x => x).ToArray().Length != 1)
+                throw new Exception("Order has only 1 PaymentMethod");
+
+            if (!buyer.PaymentMethod.Contains(paymentIntArr))
+                throw new Exception("Buyer with ID: " + buyer.Id + " not have this PaymentMethod");
+
+            order.Status = Utils.ConvertPaymentMethod
+                .convertStatusAndPaymentMethodToStatusOrder(int.Parse(paymentIntArr), order.Status);
+
             return order;
         }
 
@@ -63,9 +75,8 @@ namespace NetCrud2.Mapper.Impl
             order.Id = entity.Id;
             order.Address = entity.Address;
             order.CreateDate = entity.CreateDate.ToString();
-            order.Status = (entity.Status == 1) ? "Active" : "Inactive";
             order.BuyerName = buyer.Name;
-            order.PaymentMethod = buyer.PaymentMethod;
+            order = Utils.ConvertPaymentMethod.convertStatusOrderToOrderResponse(order, entity.Status);
 
             return order;
         }
@@ -90,7 +101,11 @@ namespace NetCrud2.Mapper.Impl
 
         public Order UpdatetoEntity(OrderUpdate update, Order entity)
         {
-            
+            Buyer buyer;
+            buyer = _dbSetBuyer.FirstOrDefault(b => b.Id == update.BuyerId);
+            if (buyer == null)
+                throw new InvalidOperationException("Cannot find Buyer with BuyerId: " + update.BuyerId);
+
             try
             {
                 entity.CreateDate = DateTime.Parse(update.CreateDate);
@@ -103,6 +118,16 @@ namespace NetCrud2.Mapper.Impl
             entity.Status = update.Status;
             entity.Address = update.Address;
             entity.BuyerId = update.BuyerId;
+
+            string paymentIntArr = Utils.ConvertPaymentMethod.StringArrToIntArr(update.PaymentMethod);
+            if (paymentIntArr.Split(",").Select(x => x).ToArray().Length != 1)
+                throw new Exception("Order has only 1 PaymentMethod");
+
+            if (!buyer.PaymentMethod.Contains(paymentIntArr))
+                throw new Exception("Buyer with ID: " + buyer.Id + " not have this PaymentMethod");
+
+            entity.Status = Utils.ConvertPaymentMethod
+                .convertStatusAndPaymentMethodToStatusOrder(int.Parse(paymentIntArr), update.Status);
 
             return entity;
         }

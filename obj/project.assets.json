@@ -1673,11 +1673,12 @@
           "lib/net6.0/Oracle.EntityFrameworkCore.dll": {}
         }
       },
-      "Oracle.ManagedDataAccess.Core/3.21.150": {
+      "Oracle.ManagedDataAccess.Core/23.5.1": {
         "type": "package",
         "dependencies": {
           "System.Diagnostics.PerformanceCounter": "6.0.1",
           "System.DirectoryServices.Protocols": "6.0.2",
+          "System.Formats.Asn1": "6.0.1",
           "System.Security.Cryptography.Pkcs": "6.0.4"
         },
         "compile": {
@@ -2258,7 +2259,7 @@
           "lib/netstandard1.3/System.Dynamic.Runtime.dll": {}
         }
       },
-      "System.Formats.Asn1/6.0.0": {
+      "System.Formats.Asn1/6.0.1": {
         "type": "package",
         "compile": {
           "lib/net6.0/System.Formats.Asn1.dll": {
@@ -5512,21 +5513,22 @@
         "readme.txt"
       ]
     },
-    "Oracle.ManagedDataAccess.Core/3.21.150": {
-      "sha512": "Lzs7IKor81A4LuPZ1cy4E/EgdAomdXttocvfpn4VzHSdQZgRUT1qD2GFUYlmvXJfclVzpJFmO1jiPP+vK4FU8g==",
+    "Oracle.ManagedDataAccess.Core/23.5.1": {
+      "sha512": "OYcTrQeUh3CEUYuUA0rSzdnqjVDvbQRByfeIxQub4WJShlbeY/o2NdKUuP87rU8TlGADf2ZPKsxqUdke90KNNg==",
       "type": "package",
-      "path": "oracle.manageddataaccess.core/3.21.150",
+      "path": "oracle.manageddataaccess.core/23.5.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.txt",
         "PerfCounters/register_odpc_perfmon_counters.ps1",
         "PerfCounters/unregister_odpc_perfmon_counters.ps1",
+        "README.md",
         "info.txt",
         "lib/netstandard2.1/Oracle.ManagedDataAccess.dll",
-        "oracle.manageddataaccess.core.3.21.150.nupkg.sha512",
+        "oracle.manageddataaccess.core.23.5.1.nupkg.sha512",
         "oracle.manageddataaccess.core.nuspec",
-        "readme.txt"
+        "oracle.png"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -6735,10 +6737,10 @@
         "system.dynamic.runtime.nuspec"
       ]
     },
-    "System.Formats.Asn1/6.0.0": {
-      "sha512": "T6fD00dQ3NTbPDy31m4eQUwKW84s03z0N2C8HpOklyeaDgaJPa/TexP4/SkORMSOwc7WhKifnA6Ya33AkzmafA==",
+    "System.Formats.Asn1/6.0.1": {
+      "sha512": "glgtKqWJpH9GDw0m9I5xFiF6WDIQqi/eZXU6MkMRPzAWEERGGAJh+qztkrlWSDbokQ1jalj5NcBNIvVoSDpSSA==",
       "type": "package",
-      "path": "system.formats.asn1/6.0.0",
+      "path": "system.formats.asn1/6.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6753,7 +6755,7 @@
         "lib/net6.0/System.Formats.Asn1.xml",
         "lib/netstandard2.0/System.Formats.Asn1.dll",
         "lib/netstandard2.0/System.Formats.Asn1.xml",
-        "system.formats.asn1.6.0.0.nupkg.sha512",
+        "system.formats.asn1.6.0.1.nupkg.sha512",
         "system.formats.asn1.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -9923,6 +9925,7 @@
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.33",
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.21.0",
       "Oracle.EntityFrameworkCore >= 6.21.150",
+      "Oracle.ManagedDataAccess.Core >= 23.5.1",
       "Swashbuckle.AspNetCore >= 6.5.0"
     ]
   },
@@ -10007,6 +10010,10 @@
             "target": "Package",
             "version": "[6.21.150, )"
           },
+          "Oracle.ManagedDataAccess.Core": {
+            "target": "Package",
+            "version": "[23.5.1, )"
+          },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.5.0, )"
@@ -10034,5 +10041,17 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package version outside of dependency constraint: Oracle.EntityFrameworkCore 6.21.150 requires Oracle.ManagedDataAccess.Core (>= 3.21.150 && < 3.22.0) but version Oracle.ManagedDataAccess.Core 23.5.1 was resolved.",
+      "libraryId": "Oracle.ManagedDataAccess.Core",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
 }

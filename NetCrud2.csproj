@@ -24,6 +24,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="Oracle.EntityFrameworkCore" Version="6.21.150" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.5.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 

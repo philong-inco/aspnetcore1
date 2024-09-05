@@ -82,3 +82,5 @@ C:\Users\ThinkPad\source\repos\NetCrud2\NetCrud2\bin\Debug\net6.0\Newtonsoft.Jso
 C:\Users\ThinkPad\source\repos\NetCrud2\NetCrud2\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 C:\Users\ThinkPad\source\repos\NetCrud2\NetCrud2\obj\Debug\net6.0\NetCrud2.RazorAssemblyInfo.cache
 C:\Users\ThinkPad\source\repos\NetCrud2\NetCrud2\obj\Debug\net6.0\NetCrud2.RazorAssemblyInfo.cs
+C:\Users\ThinkPad\source\repos\NetCrud2\NetCrud2\obj\Debug\net6.0\NetCrud2.sourcelink.json
+C:\Users\ThinkPad\source\repos\NetCrud2\NetCrud2\bin\Debug\net6.0\System.Formats.Asn1.dll

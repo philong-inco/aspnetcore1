@@ -8,7 +8,9 @@ using NetCrud2.Mapper.Impl;
 using NetCrud2.Models;
 using NetCrud2.Models.DTO.Request;
 using NetCrud2.Models.DTO.Response;
+using NetCrud2.Respository;
 using NetCrud2.Respository.Impl;
+using NetCrud2.Service;
 using NetCrud2.Service.Impl;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +37,10 @@ builder.Services.AddScoped<IMapperGenerics<OrderItem, OrderItemCreate, OrderItem
 builder.Services.AddScoped<IServiceGenerics<Buyer, BuyerCreate, BuyerUpdate, BuyerResponse>, BuyerService>();
 builder.Services.AddScoped<IServiceGenerics<Order, OrderCreate, OrderUpdate, OrderResponse>, OrderService>();
 builder.Services.AddScoped<IServiceGenerics<OrderItem, OrderItemCreate, OrderItemUpdate, OrderItemResponse>, OrderItemService>();
+
+// Order Repository - Service Child
+builder.Services.AddScoped<OrderRepositoryChild, OrderRepository>();
+builder.Services.AddScoped<OrderServiceChild, OrderService>();
 
 builder.Services.AddControllers(opt =>
 {

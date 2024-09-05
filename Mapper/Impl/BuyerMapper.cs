@@ -23,7 +23,7 @@ namespace NetCrud2.Mapper.Impl
         {
             Buyer buyer = new Buyer();
             buyer.Name = create.Name;
-            buyer.PaymentMethod = create.PaymentMethod;
+            buyer.PaymentMethod = Utils.ConvertPaymentMethod.StringArrToIntArr(create.PaymentMethod);
             return buyer;
         }
 
@@ -32,7 +32,7 @@ namespace NetCrud2.Mapper.Impl
             BuyerResponse response = new BuyerResponse();
             response.Id = entity.Id;
             response.Name = entity.Name;
-            response.PaymentMethod = entity.PaymentMethod; 
+            response.PaymentMethod = Utils.ConvertPaymentMethod.intArrToStringArr(entity.PaymentMethod); 
             return response;
         }
 
@@ -50,7 +50,7 @@ namespace NetCrud2.Mapper.Impl
         public Buyer UpdatetoEntity(BuyerUpdate update, Buyer entity)
         {
             entity.Name = update.Name;
-            entity.PaymentMethod = update.PaymentMethod;
+            entity.PaymentMethod = Utils.ConvertPaymentMethod.StringArrToIntArr(update.PaymentMethod);
             return entity;
         }
     }

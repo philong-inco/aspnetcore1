@@ -85,7 +85,7 @@ namespace NetCrud2.Controllers
             if (!check)
             {
                 return Ok(new APIResponse<object>(
-                    200, "Have error from input",
+                    400, "Have error from input",
                     ModelState.Where(ms => ms.Value.Errors.Count > 0)
                     .ToDictionary(k => k.Key, k => k.Value.Errors
                     .Select(e => e.ErrorMessage)
@@ -103,7 +103,7 @@ namespace NetCrud2.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new APIResponse<object>(
-                    200, ex.Message
+                    400, ex.Message
                     ));
             }
 
@@ -134,7 +134,7 @@ namespace NetCrud2.Controllers
             if (!update.Id.Equals(id))
             {
                 return BadRequest(new APIResponse<object>(
-                    200, "Id params different Id in Body"
+                    400, "Id params different Id in Body"
                     ));
             }
 
@@ -148,7 +148,7 @@ namespace NetCrud2.Controllers
             catch (NullReferenceException ex)
             {
                 return NotFound(new APIResponse<object>(
-                    200, ex.Message
+                    400, ex.Message
                     ));
             }
         }

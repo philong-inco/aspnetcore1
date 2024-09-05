@@ -15,6 +15,8 @@ namespace NetCrud2.Models.DTO.Request
         //[Range(0,5, ErrorMessage = "Order status in range 0-5")]
         public int Status { get; set; }
 
+        public string PaymentMethod { get; set; }
+
         //[Required(ErrorMessage = "BuyerId is requied")]
         //[StringLength(36, ErrorMessage = "BuyerId length maximum 36 characters")]
         public string BuyerId { get; set; }

@@ -3,6 +3,8 @@ using NetCrud2.Generics;
 using NetCrud2.Models;
 using NetCrud2.Models.DTO.Request;
 using NetCrud2.Models.DTO.Response;
+using NetCrud2.Service;
+using NetCrud2.Service.Impl;
 using System.Linq.Expressions;
 
 namespace NetCrud2.Controllers
@@ -14,14 +16,17 @@ namespace NetCrud2.Controllers
         private readonly IServiceGenerics<Order, OrderCreate, OrderUpdate, OrderResponse> _service;
         private readonly IServiceGenerics<Buyer, BuyerCreate, BuyerUpdate, BuyerResponse> _buyerService;
         private readonly IMapperGenerics<Order, OrderCreate, OrderUpdate, OrderResponse> _mapper;
+        private readonly OrderServiceChild _orderServiceChild;
 
         public OrderController(IServiceGenerics<Order, OrderCreate, OrderUpdate, OrderResponse> service, 
             IServiceGenerics<Buyer, BuyerCreate, BuyerUpdate, BuyerResponse> buyerService, 
-            IMapperGenerics<Order, OrderCreate, OrderUpdate, OrderResponse> mapper)
+            IMapperGenerics<Order, OrderCreate, OrderUpdate, OrderResponse> mapper, 
+            OrderServiceChild orderServiceChild)
         {
             _service = service;
             _buyerService = buyerService;
             _mapper = mapper;
+            _orderServiceChild = orderServiceChild;
         }
 
         [HttpGet("list")]
@@ -210,6 +215,40 @@ namespace NetCrud2.Controllers
                 200, "DELETE successfully"
                 ));
 
+        }
+
+        [HttpGet("search-order")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(object))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(object))]
+        public ActionResult<APIResponse<FindOrderResponse>> findOrderCustom([FromQuery(Name = "payment")] string payment,
+                                                                [FromQuery(Name = "start")] string startStr,
+                                                                [FromQuery(Name = "end")] string endStr)
+        {
+            DateTime start, end;
+            try
+            {
+                start = DateTime.Parse(startStr);
+                end = DateTime.Parse(endStr);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new APIResponse<FindOrderResponse>(
+                400, "DateTime wrong! Cannot convert"
+                ));
+            }
+
+            try
+            {
+                return Ok(new APIResponse<FindOrderResponse>(
+                200, "Find Successfully", _orderServiceChild.findOrderByPaymentMethodAndDate(payment, start, end)
+                ));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new APIResponse<FindOrderResponse>(
+                400, ex.Message
+                ));
+            }
         }
     }
 }
